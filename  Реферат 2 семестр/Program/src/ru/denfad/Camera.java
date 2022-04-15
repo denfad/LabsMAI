@@ -158,7 +158,7 @@ public class Camera {
                 }
                 if (lastx != pixelX) {
                     lastx = pixelX;
-                    border.add(new double[]{pixelX - img.getWidth() / 2, i - img.getHeight() / 2, z});
+                    border.add(new double[]{Math.ceil(x), i - img.getHeight() / 2, z});
                 }
                 x += d;
                 z += dz;
