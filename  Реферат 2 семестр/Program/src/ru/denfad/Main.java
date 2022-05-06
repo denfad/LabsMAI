@@ -101,9 +101,9 @@ public class Main {
 
 
         tetraider = inflate(inflate(inflate(tetraider)));
-       // for(Polygon p: tetraider) p.translate(-delta, 0, 0);
-       // for(Polygon p: polygons) p.translate(delta, 0, 0);
-        //  polygons.addAll(tetraider);
+       //for(Polygon p: tetraider) p.translate(-delta, 0, 0);
+       for(Polygon p: polygons) p.translate(delta, 0, 0);
+         polygons.addAll(tetraider);
 
 
         //координатные оси

@@ -7,6 +7,7 @@
 typedef struct unit{
     int value;
     struct unit *next;
+    struct unit *prev;
 }unit;
 
 typedef struct {

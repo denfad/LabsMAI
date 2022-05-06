@@ -14,66 +14,31 @@ int main(int argc, const char * argv[]) {
     
     FILE *f;
     f = fopen("//Users//denisfadeev//Documents//LabsMAI//KP6//KP6//BD.bin", "wb");
-    Student s1 = {"Fadeev", "DV", "M", "M103", NULL};
-    test t1 = {"MATH", 5};
-    test t2 = {"INFA", 4};
-    test t3 = {"RUS", 3};
-    add_test_to_student(&t1, &s1);
-    add_test_to_student(&t2, &s1);
-    add_test_to_student(&t3, &s1);
-    add_student(&s1, f);
-    Student s2 = {"MIXAIL", "DP", "M", "M102", NULL};
-    test t21 = {"MATH", 3};
-    test t22 = {"INFA", 5};
-    test t23 = {"RUS", 4};
-    add_test_to_student(&t21, &s2);
-    add_test_to_student(&t22, &s2);
-    add_test_to_student(&t23, &s2);
-    add_student(&s2, f);
-    Student s3 = {"MASHA", "BV", "W", "M105", NULL};
-    test t33 = {"RUS", 4};
-    test t34 = {"HISTORY", 2};
-    add_test_to_student(&t33, &s3);
-    add_test_to_student(&t34, &s3);
-    add_student(&s3, f);
-    Student s5 = {"DASH", "GV", "W", "M108", NULL};
-    test t53 = {"OFP", 5};
-    test t54 = {"TRMX", 4};
-    add_test_to_student(&t53, &s5);
-    add_test_to_student(&t54, &s5);
-    add_student(&s5, f);
-    Student s6 = {"BASH", "GV", "W", "M108", NULL};
-    test t63 = {"OFP", 5};
-    test t64 = {"TRMX", 5};
-    add_test_to_student(&t63, &s6);
-    add_test_to_student(&t64, &s6);
-    add_student(&s6, f);
+    char surnames[][MAXCHAR] = {"Fadeev", "Jilin", "Mamontova", "Ignatyeva", "Subotina", "Gorohova", "Kirilov", "Sokolov", "Basharov", "Makarov", "Ivanov"};
+    char initials[][MAXCHAR] = {"DV", "MD", "PV", "ES", "MS", "DG", "KA", "VV", "DS", "MM", "TO"};
+    char sex[][MAXCHAR] = {"M", "W"};
+    char group[][MAXCHAR] = {"M103", "M108", "M105"};
+    char exam[][MAXCHAR] = {"MATH", "RUS", "HISTORY", "OOP", "TRMH", "JAVA"};
+    
+    for(int i = 0; i < 11; i++) {
+        Student *s = malloc(sizeof(Student));
+        strcpy(s->surname, surnames[rand()%11]);
+        strcpy(s->initials, initials[rand()%11]);
+        strcpy(s->sex, sex[rand()%2]);
+        strcpy(s->group, group[rand()%3]);
+        int count = rand()%4+1;
+        for(int i = 0; i<count; i++) {
+            test *t = malloc(sizeof(test));
+            strcpy(t->name, exam[rand()%6]);
+            t->score = rand()%5;
+            add_test_to_student(t, s);
+        }
+        s->count = count;
+        add_student(s, f);
+    }
+    
     fclose(f);
-    
-    //вывод
-    f = fopen("//Users//denisfadeev//Documents//LabsMAI//KP6//KP6//BD.bin", "rb");
-    char p[MAXCHAR] = "";
-    bool fflag = false;
-    for(int i = 1; i< argc; i++) {
-        if(strcmp(argv[i], "-f") == 0) fflag = true;
-        if(strcmp(argv[i], "-p") == 0) {
-            strcpy(p, argv[i+1]);
-            i++;
-        }
-    }
-    
-    Student s;
-    int count = 0;
-    while(get_student(&s, f) == 0) {
-        if(strcmp(s.sex, "W") == 0 && strcmp(s.group, p) == 0) {
-            int five_count = 0;
-            for(int i = 0; i < s.count; i ++) {
-                if(s.tests[i]->score == 5) five_count+=1;
-            }
-            if(five_count == 1) count+=1;
-        }
-    }
-    fprintf(stdout, "Count of females with one five score in tests or exams: %d\n", count);
+ 
    
     
     

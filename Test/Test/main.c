@@ -157,18 +157,21 @@ int main(int argc, const char * argv[]) {
             case 11:
                 e = deck_create();
                 d = deck_create();
-                for(int i = 0; i < 1000; i++) {
+                for(int i = 0; i < 1000000; i++) {
                     int a = rand();
                     deck_push_back(e, a);
                     deck_push_back(d, a);
                 }
-                clock_t time_e = clock();
-                e = deck_sort(e);
-                clock_t e_end = clock() - time_e;
                 
                 clock_t time_d = clock();
                 d = merge_sort(d);
                 clock_t d_end = clock() - time_d;
+                
+                clock_t time_e = clock();
+                e = deck_sort(e);
+                clock_t e_end = clock() - time_e;
+              
+                
                 
                 printf("Time of own function %f, time of usual %f\n", (double) e_end / CLOCKS_PER_SEC, (double) d_end / CLOCKS_PER_SEC);
                 

@@ -19,6 +19,7 @@ void deck_push_front(deck *d, int value) {
         unit *u = (unit *)malloc(sizeof(unit));
         u->value = value;
         u->next = NULL;
+        u->prev = NULL;
         d->left = u;
         d->right = u;
     }
@@ -26,6 +27,8 @@ void deck_push_front(deck *d, int value) {
         unit *u = (unit *)malloc(sizeof(unit));
         u->value = value;
         u->next = d->left;
+        d->left->prev = u;
+        u->prev = NULL;
         d->left = u;
     }
 }
@@ -35,6 +38,7 @@ void deck_push_back(deck *d, int value) {
         unit *u = (unit *)malloc(sizeof(unit));
         u->value = value;
         u->next = NULL;
+        u->prev = NULL;
         d->left = u;
         d->right = u;
     }
@@ -42,6 +46,7 @@ void deck_push_back(deck *d, int value) {
         unit *u = (unit *)malloc(sizeof(unit));
         u->value = value;
         u->next = NULL;
+        u->prev = d->right;
         d->right->next = u;
         d->right = u;
     }
@@ -55,6 +60,7 @@ unit * deck_pop_front(deck *d) {
     else if(d->left->next != NULL) {
         unit *u = d->left;
         d->left = u->next;
+        d->left->prev = NULL;
         u->next = NULL;
         return u;
     }
@@ -63,6 +69,7 @@ unit * deck_pop_front(deck *d) {
         d->left = NULL;
         d->right = NULL;
         u->next = NULL;
+        u->prev = NULL;
         return u;
     }
     
@@ -75,9 +82,10 @@ unit * deck_pop_back(deck *d) {
     }
     else if(d->left->next != NULL) {
         unit *u = d->right;
-        d->right = deck_find_prev(d->left, u);
+        d->right = u->prev;
         d->right->next = NULL;
         u->next = NULL;
+        u->prev = NULL;
         return u;
     }
     else {
@@ -85,6 +93,7 @@ unit * deck_pop_back(deck *d) {
         d->left = NULL;
         d->right = NULL;
         u->next = NULL;
+        u->prev = NULL;
         return u;
     }
 }
@@ -131,9 +140,9 @@ deck * merge_sort(deck *d) {
     deck *r = deck_create();
     for(size_t i = 0; i < mid; i++) deck_push_back(l, deck_pop_front(d) -> value);
     for(size_t i = mid; i < length; i++) deck_push_back(r, deck_pop_front(d) -> value);
-    free(d);
     l = merge_sort(l);
     r = merge_sort(r);
+    free(d);
     
     deck *t = deck_create();
     int a = 0;
@@ -149,7 +158,7 @@ deck * merge_sort(deck *d) {
                 deck_push_front(l, a);
             } else {
                 deck_push_back(t, a);
-                deck_push_front(l, b);
+                deck_push_front(r, b);
             }
         }
     }
