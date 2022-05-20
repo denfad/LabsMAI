@@ -22,7 +22,6 @@ int define_priority (char a);
 unit * make_tree(char expr[], int first, int last);
 void print_tree(unit *u, int l);
 void print_expression(unit *u);
-unit * copy(unit *u);
 unit * spec_func(unit *u);
 
 

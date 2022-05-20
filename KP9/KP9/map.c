@@ -7,6 +7,14 @@
 
 #include "map.h"
 
+bool contain(int n, int a[]) {
+    for(int i = 0; i < 14; i++) {
+        if(a[i] == n) return true;
+    }
+    return false;
+}
+
+
 void map_sort_xor(map *m, int start, int end) {
     int i = start;
     int j = end;
@@ -56,9 +64,20 @@ void map_sort(map *m) {
 }
 
 void map_generate(map *m) {
-    char surnames[][MAXLEN] = {"Fadeev", "Jilin", "Mamontova", "Ignatyeva", "Subotina", "Gorohova", "Kirilov", "Sokolov", "Basharov", "Makarov", "Ivanov"};
-    for(int i = 0; i<m->max_size; i++) {
-        map_add(m, rand()%100, surnames[rand()%11]);
+    char surnames[][MAXLEN] = {"Сегодня я поутру дома", "И жду тебя, любезный мой.", "Приди ко мне на рюмку рома,", "Приди — тряхнем мы стариной.", "Наш друг Тардиф, любимец Кома,", "Поварни полный генерал,", "Достойный дружбы и похвал", "Ханжи, поэта, балагура,—", "Тардиф, который Коленкура", "И откормил, и обокрал,—", "Тардиф, полицией гонимый", "За неуплатные долги,—", "Тардиф, умом неистощимый"};
+    int a[14];
+    for(int i = 0; i < 14; i++) {
+        a[i] = -1;
+    }
+    int j = 0;
+    for(int i = 0; i<m->max_size-1; i++) {
+        int r = rand()%13;
+        while(contain(r, a)) {
+            r = rand()%13;
+        }
+        a[j] = r;
+        j++;
+        map_add(m, r, surnames[r]);
     }
 }
 
@@ -67,3 +86,19 @@ void map_print(map *m) {
     for(int i = 0; i < m->size; i++) printf("%d: %s | ", m->units[i]->k, m->units[i]->v);
     printf("\n");
 }
+
+unit * search(map *m, int key, int left, int right) {
+    int mid = (right + left) / 2;
+if(left > right) {
+    return NULL;
+} else if(m->units[mid]->k < key) {
+        return search(m, key, mid+1, right);
+    } else if(m->units[mid]->k > key) {
+        return search(m, key, left, mid-1);
+    } if(m->units[mid]->k == key) {
+        return m->units[mid];
+    }
+   
+    return NULL;
+}
+

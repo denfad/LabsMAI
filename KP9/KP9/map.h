@@ -27,6 +27,7 @@ typedef struct map{
 }map;
 
 map * map_create();
+unit * search(map *m, int key, int left, int right);
 void map_add(map *m, int k, char *v);
 void map_sort(map *m);
 void map_generate(map *m);

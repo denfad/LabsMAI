@@ -4,7 +4,7 @@ int main(void) {
        unit *t = NULL;
        int opt = -1;
        while (opt!=5) {
-               printf("Choose code of action:\n1. Enter an expression and create tree.\t2. Transforn expression.\n3. Print tree.\tt4. Print expression.\t5. Exit\n");
+               printf("Choose code of action:\n1. Enter an expression and create tree.\t2. Transforn expression.\n3. Print tree.\t\t4. Print expression.\t5. Exit\n");
                scanf("%d", &opt);
                switch (opt) {
                        case 1: {

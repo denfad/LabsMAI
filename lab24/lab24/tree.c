@@ -110,18 +110,7 @@ void print_expression(unit *u) {
        } else print_expression(u->right);
 }
 
-unit * copy(unit *u) {
-       if (u == NULL) {
-               return NULL;
-       }
-       unit *f = malloc(sizeof(unit));
-       for (int i = 0; i<50; ++i) {
-               f->data[i] = u->data[i];
-       }
-       f ->left = copy(u->left);
-       f->right = copy(u->right);
-       return f;
-}
+
 
 unit * spec_func(unit *u) {
     if (u == NULL) {
