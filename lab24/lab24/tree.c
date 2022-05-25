@@ -116,6 +116,7 @@ unit * spec_func(unit *u) {
     if (u == NULL) {
             return NULL;
     }
+   
     if(is_op(u->data[0])) {
         spec_func(u->left);
         spec_func(u->right);
@@ -142,6 +143,10 @@ unit * spec_func(unit *u) {
         u->right = make_tree("*", 0, 1);
         u->right->left = right;
         u->right->right = left->right;
+    }
+    if(is_op(u->data[0])) {
+        spec_func(u->left);
+        spec_func(u->right);
     }
     return u;
 }

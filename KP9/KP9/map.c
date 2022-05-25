@@ -82,8 +82,7 @@ void map_generate(map *m) {
 }
 
 void map_print(map *m) {
-    printf("| ");
-    for(int i = 0; i < m->size; i++) printf("%d: %s | ", m->units[i]->k, m->units[i]->v);
+    for(int i = 0; i < m->size; i++) printf("%d: %s\n", m->units[i]->k, m->units[i]->v);
     printf("\n");
 }
 
